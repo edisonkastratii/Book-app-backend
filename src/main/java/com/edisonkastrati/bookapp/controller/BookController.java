@@ -2,10 +2,11 @@ package com.edisonkastrati.bookapp.controller;
 
 import com.edisonkastrati.bookapp.entity.Book;
 import com.edisonkastrati.bookapp.service.BookService;
+import com.edisonkastrati.bookapp.utils.ExtractJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://loaclhost:3000")
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -19,19 +20,19 @@ public class BookController {
 
     @GetMapping("/secure/currentloans/count")
     public int currentLoansCount(@RequestHeader(value = "Authorization")String token){
-        String userEmail = "testuser@email.com";
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.currentLoansCount(userEmail);
     }
 
     @GetMapping("/secure/ischeckout/byuser")
     public Boolean checkoutBookByUser(@RequestHeader(value = "Authorization")String token, @RequestParam Long bookId){
-        String userEmail = "testuser@email.com";
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.checkoutBookByUser(userEmail, bookId);
     }
 
     @PutMapping("secure/checkout")
     public Book checkoutBook(@RequestHeader(value = "Authorization")String token, @RequestParam Long bookId) throws Exception{
-        String userEmail = "testuser@email.com";
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.checkoutBook(userEmail, bookId);
     }
 
