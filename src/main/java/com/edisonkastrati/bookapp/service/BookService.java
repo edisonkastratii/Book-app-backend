@@ -93,4 +93,35 @@ public class BookService {
         }
         return shelfCurrentLoansResponses;
     }
+
+    public void returnBook(String userEmail, Long bookId)throws Exception{
+        Optional<Book> book = bookRepository.findById(bookId);
+        Checkout checkout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+
+        if(!book.isPresent() || checkout == null){
+            throw new Exception("Book doesn't exist or not checked by the user");
+        }
+
+        book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
+        bookRepository.save(book.get());
+        checkoutRepository.deleteById(checkout.getId());
+    }
+
+    public void renewLoan(String userEmail, Long bookId)throws Exception{
+        Checkout checkout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+
+        if(checkout == null){
+            throw new Exception("Book does not exist or not checked by the user");
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+
+        Date d1 = sdf.parse(checkout.getReturnDate());
+        Date d2 = sdf.parse(LocalDate.now().toString());
+
+        if(d1.compareTo(d2) > 0 || d1.compareTo(d2) == 0){
+            checkout.setReturnDate(LocalDate.now().plusDays(7).toString());
+            checkoutRepository.save(checkout);
+        }
+    }
 }
