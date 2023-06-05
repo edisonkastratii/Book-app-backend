@@ -2,8 +2,10 @@ package com.edisonkastrati.bookapp.service;
 
 import com.edisonkastrati.bookapp.dao.BookRepository;
 import com.edisonkastrati.bookapp.dao.CheckoutRepository;
+import com.edisonkastrati.bookapp.dao.HistoryRepository;
 import com.edisonkastrati.bookapp.entity.Book;
 import com.edisonkastrati.bookapp.entity.Checkout;
+import com.edisonkastrati.bookapp.entity.History;
 import com.edisonkastrati.bookapp.responseModels.ShelfCurrentLoansResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,13 @@ public class BookService {
 
     private BookRepository bookRepository;
     private CheckoutRepository checkoutRepository;
+    private HistoryRepository historyRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository) {
+    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository, HistoryRepository historyRepository) {
         this.bookRepository = bookRepository;
         this.checkoutRepository = checkoutRepository;
+        this.historyRepository = historyRepository;
     }
 
     public Book checkoutBook(String userEmail, Long bookId) throws Exception{
@@ -105,6 +109,18 @@ public class BookService {
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
         bookRepository.save(book.get());
         checkoutRepository.deleteById(checkout.getId());
+
+        History history = new History(
+                userEmail,
+                checkout.getCheckoutDate(),
+                LocalDate.now().toString(),
+                book.get().getTitle(),
+                book.get().getAuthor(),
+                book.get().getDescription(),
+                book.get().getImg()
+        );
+
+        historyRepository.save(history);
     }
 
     public void renewLoan(String userEmail, Long bookId)throws Exception{
