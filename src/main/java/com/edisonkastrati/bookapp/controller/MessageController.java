@@ -1,6 +1,7 @@
 package com.edisonkastrati.bookapp.controller;
 
 import com.edisonkastrati.bookapp.entity.Message;
+import com.edisonkastrati.bookapp.requestModels.AdminQuestionRequest;
 import com.edisonkastrati.bookapp.service.MessageService;
 import com.edisonkastrati.bookapp.utils.ExtractJWT;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,15 @@ public class MessageController {
     public void postMessage(@RequestHeader("Authorization") String token, @RequestBody Message message){
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         messageService.postMessage(message, userEmail);
+    }
+
+    @PutMapping("/secure/admin/message")
+    public void putMessage(@RequestHeader(value = "Authorization") String token, @RequestBody AdminQuestionRequest adminQuestionRequest)throws Exception{
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if(admin == null || !admin.equals(admin)){
+            throw new Exception("Administration page only");
+        }
+        messageService.putMessage(adminQuestionRequest, userEmail);
     }
 }
