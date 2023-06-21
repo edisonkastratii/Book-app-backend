@@ -5,7 +5,6 @@ import com.edisonkastrati.bookapp.entity.Book;
 public class ShelfCurrentLoansResponse {
 
     private Book book;
-
     private int daysLeft;
 
     public ShelfCurrentLoansResponse(Book book, int daysLeft) {

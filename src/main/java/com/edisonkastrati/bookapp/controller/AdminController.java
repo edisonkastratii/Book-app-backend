@@ -27,7 +27,7 @@ public class AdminController {
         adminService.postBook(addBookRequest);
     }
 
-    @PutMapping("/secure/incrase/book/quantity")
+    @PutMapping("/secure/increase/book/quantity")
     public void increaseQuantity(@RequestHeader(value = "Authorization")String token, @RequestParam Long bookId) throws Exception{
         String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
         if(admin == null || !admin.equals("admin")){
@@ -36,7 +36,7 @@ public class AdminController {
         adminService.increaseBookQuantity(bookId);
     }
 
-    @PutMapping("/secure/decrase/book/quantity")
+    @PutMapping("/secure/decrease/book/quantity")
     public void decreaseQuantity(@RequestHeader(value = "Authorization")String token, @RequestParam Long bookId)throws Exception{
         String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
         if (admin == null || !admin.equals("admin")) {

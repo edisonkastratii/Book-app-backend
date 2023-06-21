@@ -1,7 +1,6 @@
 package com.edisonkastrati.bookapp.service;
 
-import com.edisonkastrati.bookapp.dao.BookRepository;
-import com.edisonkastrati.bookapp.dao.ReviewRepository;
+import com.edisonkastrati.bookapp.repository.ReviewRepository;
 import com.edisonkastrati.bookapp.entity.Review;
 import com.edisonkastrati.bookapp.requestModels.ReviewRequest;
 import org.springframework.beans.factory.annotation.Autowired;

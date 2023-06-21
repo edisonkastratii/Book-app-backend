@@ -1,15 +1,14 @@
 package com.edisonkastrati.bookapp.service;
 
-import com.edisonkastrati.bookapp.dao.BookRepository;
-import com.edisonkastrati.bookapp.dao.CheckoutRepository;
-import com.edisonkastrati.bookapp.dao.ReviewRepository;
+import com.edisonkastrati.bookapp.repository.BookRepository;
+import com.edisonkastrati.bookapp.repository.CheckoutRepository;
+import com.edisonkastrati.bookapp.repository.ReviewRepository;
 import com.edisonkastrati.bookapp.entity.Book;
 import com.edisonkastrati.bookapp.requestModels.AddBookRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.font.OpenType;
 import java.util.Optional;
 
 @Service
@@ -20,14 +19,12 @@ public class AdminService {
     private ReviewRepository reviewRepository;
     private CheckoutRepository checkoutRepository;
 
+    @Autowired
     public AdminService(BookRepository bookRepository, ReviewRepository reviewRepository, CheckoutRepository checkoutRepository) {
         this.bookRepository = bookRepository;
         this.reviewRepository = reviewRepository;
         this.checkoutRepository = checkoutRepository;
     }
-
-    @Autowired
-
 
     public void postBook(AddBookRequest addBookRequest){
         Book book = new Book();

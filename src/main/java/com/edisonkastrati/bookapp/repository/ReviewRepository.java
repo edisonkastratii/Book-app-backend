@@ -1,4 +1,4 @@
-package com.edisonkastrati.bookapp.dao;
+package com.edisonkastrati.bookapp.repository;
 
 import com.edisonkastrati.bookapp.entity.Review;
 import org.springframework.data.domain.Page;
@@ -13,6 +13,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Page<Review> findByBookId(@RequestParam("bookId") Long bookId, Pageable pageable);
     Review findByUserEmailAndBookId(String userEmail, Long bookId);
     @Modifying
-    @Query("delete from Review where book_id in: bookId")
+    @Query("delete from Review where book_id in :book_id")
     void deleteAllByBookId(@Param("book_id")Long bookId);
 }

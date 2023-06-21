@@ -1,4 +1,4 @@
-package com.edisonkastrati.bookapp.dao;
+package com.edisonkastrati.bookapp.repository;
 
 import com.edisonkastrati.bookapp.entity.Checkout;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +12,6 @@ public interface CheckoutRepository extends JpaRepository<Checkout, Long> {
     Checkout findByUserEmailAndBookId(String userEmail, Long bookId);
     List<Checkout> findBooksByUserEmail(String userEmail);
     @Modifying
-    @Query("delete from Checkout where book_id in :bookId")
+    @Query("delete from Checkout where book_id in :book_id")
     void deleteAllByBookId(@Param("book_id") Long bookId);
 }

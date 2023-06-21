@@ -1,8 +1,8 @@
 package com.edisonkastrati.bookapp.service;
 
-import com.edisonkastrati.bookapp.dao.BookRepository;
-import com.edisonkastrati.bookapp.dao.CheckoutRepository;
-import com.edisonkastrati.bookapp.dao.HistoryRepository;
+import com.edisonkastrati.bookapp.repository.BookRepository;
+import com.edisonkastrati.bookapp.repository.CheckoutRepository;
+import com.edisonkastrati.bookapp.repository.HistoryRepository;
 import com.edisonkastrati.bookapp.entity.Book;
 import com.edisonkastrati.bookapp.entity.Checkout;
 import com.edisonkastrati.bookapp.entity.History;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

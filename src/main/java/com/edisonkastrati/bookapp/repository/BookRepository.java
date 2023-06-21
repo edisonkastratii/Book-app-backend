@@ -1,4 +1,4 @@
-package com.edisonkastrati.bookapp.dao;
+package com.edisonkastrati.bookapp.repository;
 
 import com.edisonkastrati.bookapp.entity.Book;
 import org.springframework.data.domain.Page;
